@@ -186,7 +186,7 @@ DEPENDENCIES
   sqlite3
   turbolinks
   uglifier
-  web-console (~> 2.0)
+  web-console
   will_paginate-bootstrap
 
 BUNDLED WITH
