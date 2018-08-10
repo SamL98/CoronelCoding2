@@ -68,7 +68,6 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1.json
   def update
     responses = Response.where("photo = ? and subjnum = ?", @response.photo, @response.subjnum)
-    responses = responses.uniq { |r| r.response }
     judgement = params[:response][:judgement].to_i
 
     respond_to do |format|
