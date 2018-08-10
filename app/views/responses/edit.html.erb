@@ -3,13 +3,24 @@
 <p>
   <strong>Candidate</strong>
 </p>
-<img src=<%=candidate_picture(@response.photo)%> class="img-thumbnail">
+<img src=<%=candidate_picture(@responses[0].photo)%> class="img-thumbnail">
 
 <br>
 
 <p>
-  <strong>Response:</strong>
-  <%= @response.response %>
+  <% @responses.each do |r| %>
+    <strong>Discussion:</strong>
+    <% if !r.discussion.nil? %>
+      <% r.discussion = r.discussion.gsub("Speaker", "<br/>Speaker") %>
+      <% r.discussion = r.discussion.gsub("[typing]", "<br/>[typing]") %>
+      <% r.discussion = r.discussion.gsub(/\[(\d{2}:\d{2}:\d{2})\]/) { |text| "<br/>" + text } %>
+    <% end %>
+    <%= (r.discussion || "<br/>").html_safe %>
+    <br/><br/>
+    <strong>Response:</strong><br />
+    <%= r.response %>
+    <br/><br/>
+  <% end %>
 </p>
 
 <br>

@@ -17,6 +17,7 @@
       <th>Photo</th>
       <th>Code</th>
       <th>Response</th>
+      <th>Discussion</th>
       <th>Judgement</th>
       <th colspan="3"></th>
     </tr>
@@ -33,6 +34,13 @@
         <td><%= response.photo %></td>
         <td><%= response.code %></td>
         <td><%= response.response %></td>
+        <td>
+          <% if response.discussion.nil? %>
+            <%= 'NA' %>
+          <% else %>
+            <%= response.discussion[0..20] + '...' %>
+          <% end %>
+        </td>
         <td><%= response.judgement %></td>
         <td><%= link_to 'Edit', edit_response_path(response) %></td>
       </tr>

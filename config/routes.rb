@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   root to: "responses#index"
 
+  get 'next' => 'responses#next'
   post "responses/destroy_all"
   post "responses/start_coding"
   # The priority is based upon order of creation: first created -> highest priority.

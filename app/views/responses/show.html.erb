@@ -16,8 +16,8 @@
 </p>
 
 <br>
-<% if @response.next %>
-  <%= link_to "Next Response", edit_response_path(@response.next)%>
+<% if Response.where("judgement = 0").length > 0 %>
+  <%= link_to "Next Response", '/next' %>
 <% else %>
   <%= link_to "You are finished! return to home.", root_url%>
 <%end%>

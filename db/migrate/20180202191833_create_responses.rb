@@ -9,6 +9,7 @@ class CreateResponses < ActiveRecord::Migration
       t.integer :photo
       t.string :code
       t.string :response
+      t.string :discussion
       t.integer :judgement, default:0
       t.string :coder
 

@@ -27,6 +27,15 @@ class ResponsesController < ApplicationController
     end
   end
 
+  def next
+    if(Response.exists?(["judgement = 0 and response != ''"]))
+      @response = Response.where(["judgement = 0 and response != ''"]).order('id').first
+      redirect_to edit_response_path(@response)
+    else
+      redirect_to root_url, notice: "No subject responses left to code."
+    end
+  end
+
   # GET /responses/new
   def new
     @response = Response.new
@@ -34,6 +43,9 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1/edit
   def edit
+    id = params[:id]
+    responses = Response.where("response != 'NA' and photo = ? and subjnum = ?", @response.photo, @response.subjnum)
+    @responses = responses.uniq { |r| r.response }
   end
 
   # POST /responses
@@ -55,8 +67,12 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
+    responses = Response.where("photo = ? and subjnum = ?", @response.photo, @response.subjnum)
+    responses = responses.uniq { |r| r.response }
+    judgement = params[:response][:judgement].to_i
+
     respond_to do |format|
-      if @response.update(response_params)
+      if (responses.map { |r| r.update(judgement: judgement) ? 1 : 0 }).inject(0, :+) == responses.length
         format.html { redirect_to @response, notice: 'Response was successfully updated.' }
         format.json { render :show, status: :ok, location: @response }
       else
@@ -97,6 +113,17 @@ class ResponsesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def response_params
-      params.require(:response).permit(:subjnum, :dyad, :whichtest, :condition, :date, :photo, :code, :response, :judgement, :coder)
+      params.require(:response).permit(
+        :subjnum, 
+        :dyad, 
+        :whichtest, 
+        :condition, 
+        :date, 
+        :photo, 
+        :code, 
+        :response,
+        :discussion,
+        :judgement, 
+        :coder)
     end
 end

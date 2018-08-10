@@ -15,6 +15,7 @@
         <Cell><Data ss:Type="String">photo</Data></Cell>
         <Cell><Data ss:Type="String">code</Data></Cell>
         <Cell><Data ss:Type="String">response</Data></Cell>
+        <Cell><Data ss:Type="String">discussion</Data></Cell>
         <Cell><Data ss:Type="String">judgement</Data></Cell>
       </Row>
       <% @all_responses.each do |response| %>
@@ -27,6 +28,7 @@
           <Cell><Data ss:Type="Number"><%= response.photo %></Data></Cell>
           <Cell><Data ss:Type="String"><%= response.code %></Data></Cell>
           <Cell><Data ss:Type="String"><%= response.response %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= response.discussion %></Data></Cell>
           <Cell><Data ss:Type="Number"><%= response.judgement %></Data></Cell>
 
         </Row>

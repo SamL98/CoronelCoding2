@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20180202191833) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "responses", force: :cascade do |t|
     t.string   "subjnum"
     t.integer  "dyad"
@@ -25,6 +22,7 @@ ActiveRecord::Schema.define(version: 20180202191833) do
     t.integer  "photo"
     t.string   "code"
     t.string   "response"
+    t.string   "discussion"
     t.integer  "judgement",  default: 0
     t.string   "coder"
     t.datetime "created_at",             null: false
