@@ -19,8 +19,8 @@ class ResponsesController < ApplicationController
   end
 
   def start_coding
-    if(Response.exists?(["judgement = 0 and response != ''"]))
-      @response = Response.where(["judgement = 0 and response != ''"]).order('id').first
+    if(Response.exists?(["judgement = 0 and response != '' and response != 'NA'"]))
+      @response = Response.where(["judgement = 0 and response != '' and response != 'NA'"]).order('id').first
       redirect_to edit_response_path(@response)
     else
       redirect_to root_url, notice: "No subject responses left to code."
@@ -28,8 +28,8 @@ class ResponsesController < ApplicationController
   end
 
   def next
-    if(Response.exists?(["judgement = 0 and response != ''"]))
-      @response = Response.where(["judgement = 0 and response != ''"]).order('id').first
+    if(Response.exists?(["judgement = 0 and response != '' and response != 'NA'"]))
+      @response = Response.where(["judgement = 0 and response != '' and response != 'NA'"]).order('id').first
       redirect_to edit_response_path(@response)
     else
       redirect_to root_url, notice: "No subject responses left to code."
@@ -67,7 +67,7 @@ class ResponsesController < ApplicationController
   # PATCH/PUT /responses/1
   # PATCH/PUT /responses/1.json
   def update
-    responses = Response.where("photo = ? and subjnum = ?", @response.photo, @response.subjnum)
+    responses = Response.where("response != 'NA' and photo = ? and subjnum = ?", @response.photo, @response.subjnum)
     judgement = params[:response][:judgement].to_i
 
     respond_to do |format|
@@ -79,6 +79,20 @@ class ResponsesController < ApplicationController
         format.json { render json: @response.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def next_res
+    @responses = Response.where("photo = ? and subjnum = ?", params[:photo].to_s, params[:subjnum].to_s)
+    @notice = 'Response was successfully updated.'
+
+    #format.html { redirect_to @response, notice: 'Response was successfully updated.' }
+    #format.json { render :show, status: :ok, location: @response }
+  end
+
+  def update_res
+    id = params[:id].to_i
+    judgement = params[:response][:judgement].to_i
+    Response.where('id = ?', id).first.update(judgement: judgement)
   end
 
   # DELETE /responses/1

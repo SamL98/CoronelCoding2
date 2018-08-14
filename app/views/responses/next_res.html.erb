@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Codes:</strong>
+  <%= (@responses.map { |r| r.code }).join(', ') %>
+</p>
+
+<p>
+  <strong>Responses:</strong><br/>
+  <%= (@responses.map { |r| r.response }).join('<br/>').html_safe %>
+</p>
+
+<p>
+  <strong>Judgements:</strong>
+  <%= (@responses.map { |r| r.judgement.to_s }).join(', ') %>
+</p>
+
+<br>
+<% if Response.where("judgement = 0 and response != 'NA'").length > 0 %>
+  <%= link_to "Next Response", '/next' %>
+<% else %>
+  <%= link_to "You are finished! return to home.", root_url%>
+<%end%>
+<br>
+<br>
+<%= link_to 'Edit', '/next' %>

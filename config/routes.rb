@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'next' => 'responses#next'
   post "responses/destroy_all"
   post "responses/start_coding"
+  post 'update_res' => 'responses#update_res'
+  post 'next_res' => 'responses#next_res'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
